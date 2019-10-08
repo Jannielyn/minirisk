@@ -2,7 +2,7 @@
 ##### 安装
 install Git from [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-##### create ur SSH key
+##### Create ur SSH key
 Follow guide from [here](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), then [here](https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account)
 
 ##### 克隆

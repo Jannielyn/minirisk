@@ -2,12 +2,15 @@
 ##### 安装
 install Git from [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-##### 克隆（初始化只需做一次,好像会自动提示login）
-***Open cmd***
+##### create ur SSH key
+Follow guide from [here](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), then [here](https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account)
+
+##### 克隆
+***Open git bash***
 ***go to your folder***
 ```
 git init
-git clone https://github.com/fecpp/sudoku.git
+git clone git@github.com:fecpp/minirisk.git
 ```
 
 ##### 以下常规操作：先pull再push

@@ -6,7 +6,7 @@ install Git from [here](https://git-scm.com/book/en/v2/Getting-Started-Installin
 Follow guide from [here](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), then [here](https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account)
 
 ##### 克隆
-***Open git bash***
+***Open Git Bash,***
 ***go to your folder***
 ```
 git init

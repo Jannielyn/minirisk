@@ -16,7 +16,7 @@ struct DateInitializer : std::array<unsigned, Date::n_years>
 };
 
 const std::array<unsigned, 12> Date::days_in_month = { {31,28,31,30,31,30,31,31,30,31,30,31} };
-const std::array<unsigned, 12> Date::days_ytd{ {0,31,59,90,120,151,181,212,243,273,304,334} };
+const std::array<unsigned, 12> Date::days_ytd = { {0,31,59,90,120,151,181,212,243,273,304,334} };
 const std::array<unsigned, Date::n_years> Date::days_epoch(static_cast<const std::array<unsigned, Date::n_years>&>(DateInitializer()));
 
 /* The function checks if a given year is a leap year.
@@ -44,9 +44,9 @@ void Date::check_valid(unsigned y, unsigned m, unsigned d)
     MYASSERT(d >= 1 && d <= dmax, "The day must be a integer between 1 and " << dmax << ", got " << d);
 }
 
-unsigned Date::day_of_year() const
+unsigned Date::day_of_year(unsigned y, unsigned m, unsigned d) const
 {
-    return days_ytd[m_m - 1] + ((m_m > 2 && m_is_leap) ? 1 : 0) + (m_d - 1);
+    return days_ytd[m - 1] + ((m > 2 && is_leap_year(y)) ? 1 : 0) + (d - 1);
 }
 
 
@@ -55,8 +55,8 @@ unsigned Date::day_of_year() const
 */
 long operator-(const Date& d1, const Date& d2)
 {
-    unsigned s1 = d1.serial();
-    unsigned s2 = d2.serial();
+    unsigned s1 = d1.m_serial;
+    unsigned s2 = d2.m_serial;
     return static_cast<long>(s1) - static_cast<long>(s2);
 }
 

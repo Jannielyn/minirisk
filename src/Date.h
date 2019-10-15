@@ -17,7 +17,7 @@ private:
     static std::string padding_dates(unsigned);
 
     // number of days elapsed from beginning of the year
-    unsigned day_of_year() const;
+    unsigned day_of_year(unsigned y, unsigned m, unsigned d) const;
 
     friend long operator-(const Date& d1, const Date& d2);
 
@@ -27,24 +27,54 @@ private:
 
 public:
     // Default constructor
-    Date() : m_y(1970), m_m(1), m_d(1), m_is_leap(false) {}
+    Date() : m_serial(0) {} //m_y(1970), m_m(1), m_d(1), m_is_leap(false), 
 
     // Constructor where the input value is checked.
     Date(unsigned year, unsigned month, unsigned day)
     {
         init(year, month, day);
     }
-
+	
     void init(unsigned year, unsigned month, unsigned day)
     {
         check_valid(year, month, day);
-        m_y = (unsigned short) year;
-        m_m = (unsigned char) month;
-        m_d = (unsigned char) day;
-        m_is_leap = is_leap_year(year);
-    }
+        //m_y = (unsigned short) year;
+        //m_m = (unsigned char) month;
+        //m_d = (unsigned char) day;
+        //m_is_leap = is_leap_year(year);
+		m_serial = serial(year, month, day);
+	}
 
     static void check_valid(unsigned y, unsigned m, unsigned d);
+	
+	unsigned get_year(unsigned s) const
+	{	 
+		unsigned year = Date::first_year - 1; 
+		for (auto i = days_epoch.begin(); i != days_epoch.end(); ++i) {
+			if (*i > s) break; 
+			else year++;
+		}
+		return year;
+	}
+
+	unsigned get_month(unsigned s) const
+	{
+		unsigned year = Date::get_year(s);
+		unsigned days_in_year = s - days_epoch[(year - Date::first_year)];
+		unsigned month = 0;
+		for (auto i = days_ytd.begin(); i != days_ytd.end(); ++i) {
+			if (is_leap_year(year) && month > 1) {
+				if (*i + 1 > days_in_year) break;
+				else month++;
+			}
+			else {
+				if (*i > days_in_year) break;
+				else month++;
+			}
+		}
+		return month;
+	}
+
 
     bool operator<(const Date& d) const
     {
@@ -62,9 +92,9 @@ public:
     }
 
     // number of days since 1-Jan-1900
-    unsigned serial() const
+    unsigned serial(unsigned y, unsigned m, unsigned d) const
     {
-        return days_epoch[m_y - 1900] + day_of_year();
+        return days_epoch[y - 1900] + day_of_year(y, m, d);
     }
 
     static bool is_leap_year(unsigned yr);
@@ -82,6 +112,7 @@ private:
     unsigned char m_m;
     unsigned char m_d;
     bool m_is_leap;
+	unsigned m_serial; //¼Ó
 };
 
 long operator-(const Date& d1, const Date& d2);

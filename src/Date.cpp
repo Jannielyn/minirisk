@@ -1,5 +1,5 @@
 #include <iomanip>
-
+#include <iostream>
 #include "Date.h"
 
 namespace minirisk {
@@ -37,16 +37,56 @@ std::string Date::padding_dates(unsigned month_or_day)
 
 void Date::check_valid(unsigned y, unsigned m, unsigned d)
 {
-    MYASSERT(y >= first_year, "The year must be no earlier than year " << first_year << ", got " << y);
-    MYASSERT(y < last_year, "The year must be smaller than year " << last_year << ", got " << y);
+	MYASSERT(y >= first_year, "The year must be no earlier than year " << first_year << ", got " << y);
+	MYASSERT(y < last_year, "The year must be smaller than year " << last_year << ", got " << y);
     MYASSERT(m >= 1 && m <= 12, "The month must be a integer between 1 and 12, got " << m);
     unsigned dmax = days_in_month[m - 1] + ((m == 2 && is_leap_year(y)) ? 1 : 0);
     MYASSERT(d >= 1 && d <= dmax, "The day must be a integer between 1 and " << dmax << ", got " << d);
+}
+void Date::check_valid(unsigned s) {
+	MYASSERT(s >= 0 && s <= 109572, "The serial must be a integer between 0 (1-Jan-1900) and 109572 (31-Dec-2199), got " << s);
 }
 
 unsigned Date::day_of_year(unsigned y, unsigned m, unsigned d) const
 {
     return days_ytd[m - 1] + ((m > 2 && is_leap_year(y)) ? 1 : 0) + (d - 1);
+}
+
+unsigned Date::get_year(unsigned s) const
+{
+	unsigned year = Date::first_year - 1;
+	for (auto i = days_epoch.begin(); i != days_epoch.end(); ++i) {
+		if (*i > s) break;
+		else year++;
+	}
+	return year;
+}
+
+unsigned Date::get_month(unsigned s) const
+{
+	unsigned year = Date::get_year(s);
+	unsigned days_in_year = s - days_epoch[(year - Date::first_year)];
+	unsigned month = 0;
+	for (auto i = days_ytd.begin(); i != days_ytd.end(); ++i) {
+		if (is_leap_year(year) && month > 1) {
+			if (*i + 1 > days_in_year) break;
+			else month++;
+		}
+		else {
+			if (*i > days_in_year) break;
+			else month++;
+		}
+	}
+	return month;
+}
+
+unsigned Date::get_day(unsigned s) const
+{
+	unsigned year = Date::get_year(s);
+	unsigned month = Date::get_month(s);
+	unsigned days_in_year = s - days_epoch[(year - Date::first_year)];
+	unsigned days = 1 + days_in_year - ((is_leap_year(year) && month > 2) ? days_ytd[month - 1] + 1 : days_ytd[month - 1]);
+	return days;
 }
 
 

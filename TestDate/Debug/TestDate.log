@@ -1,2 +1,3 @@
 ﻿  TestDate.cpp
+C:\Users\User\Documents\CPP\minirisk\src\TestDate.cpp(23,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   TestDate.vcxproj -> C:\Users\User\Documents\CPP\minirisk\TestDate\Debug\TestDate.exe

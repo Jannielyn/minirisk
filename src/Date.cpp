@@ -37,14 +37,14 @@ std::string Date::padding_dates(unsigned month_or_day)
 
 void Date::check_valid(unsigned y, unsigned m, unsigned d)
 {
-	MYASSERT(y >= first_year, "The year must be no earlier than year " << first_year << ", got " << y);
-	MYASSERT(y < last_year, "The year must be smaller than year " << last_year << ", got " << y);
-    MYASSERT(m >= 1 && m <= 12, "The month must be a integer between 1 and 12, got " << m);
+	MYASSERT(y >= first_year, "The year must be no earlier than year " << first_year << ", got " << y << ".");
+	MYASSERT(y < last_year, "The year must be smaller than year " << last_year << ", got " << y << ".");
+    MYASSERT(m >= 1 && m <= 12, "The month must be a integer between 1 and 12, got " << m << ".");
     unsigned dmax = days_in_month[m - 1] + ((m == 2 && is_leap_year(y)) ? 1 : 0);
-    MYASSERT(d >= 1 && d <= dmax, "The day must be a integer between 1 and " << dmax << ", got " << d);
+    MYASSERT(d >= 1 && d <= dmax, "The day must be a integer between 1 and " << dmax << ", got " << d << ".");
 }
 void Date::check_valid(unsigned s) {
-	MYASSERT(s >= 0 && s <= 109572, "The serial must be a integer between 0 (1-Jan-1900) and 109572 (31-Dec-2199), got " << s);
+	MYASSERT(s >= 0 && s <= 109572, "The serial must be a integer between 0 (1-Jan-1900) and 109572 (31-Dec-2199), got " << s << ".");
 }
 
 unsigned Date::day_of_year(unsigned y, unsigned m, unsigned d) const

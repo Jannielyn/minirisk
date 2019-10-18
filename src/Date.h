@@ -43,10 +43,7 @@ public:
     {
 		check_valid(year, month, day);
 		m_serial = serial(year, month, day);
-        //m_y = (unsigned short) year;
-        //m_m = (unsigned char) month;
-        //m_d = (unsigned char) day;
-        //m_is_leap = is_leap_year(year);
+        //m_y = (unsigned short) year; m_m = (unsigned char) month; m_d = (unsigned char) day; m_is_leap = is_leap_year(year);
 	}
 
 	// Constructor using serial, input value is checked. shouldn't be used normally
@@ -57,13 +54,8 @@ public:
 
 	void init(unsigned serial)
 	{
-		try {
-			check_valid(serial);
-			m_serial = serial;
-		}
-		catch (const std::exception& msg) {
-			std::cerr << msg.what() << std::endl;
-		}
+		check_valid(serial);
+		m_serial = serial;
 	}
 
     static void check_valid(unsigned y, unsigned m, unsigned d);

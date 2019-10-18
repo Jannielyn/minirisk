@@ -72,18 +72,18 @@ void test2()
 	int failures = 0;
 	const std::array<unsigned, 12> days_in_month = { {31,28,31,30,31,30,31,31,30,31,30,31} };
 	const std::array<unsigned, 12> days_in_month_leap = { {31,29,31,30,31,30,31,31,30,31,30,31} };
-	for (int y = 1900; y < 1901; ++y) {
-		for (int m = 1; m <= 1; ++m) {
-			int dmax = ((Date::is_leap_year(y)) ? days_in_month_leap[m - 1] : days_in_month[m - 1]);
-			for (int d = 1; d <= dmax; ++d) {
+	for (unsigned y = 1900; y < 2200; ++y) {
+		for (unsigned m = 1; m <= 12; ++m) {
+			unsigned dmax = ((Date::is_leap_year(y)) ? days_in_month_leap[m - 1] : days_in_month[m - 1]);
+			for (unsigned d = 1; d <= dmax; ++d) {
 				
 				Date someDay(y, m, d);	//date stored serial format
 				std::string someDay_str = someDay.to_string(); //convert the serial date back to string in calander format (e.g. 1-1-1900)
 
 				//get the day, month, year out of the string respectively 
-				int someDay_str_day = std::stoi(someDay_str.substr(0, someDay_str.find('-')));
-				int someDay_str_month = std::stoi(someDay_str.substr(someDay_str.find('-') + 1, someDay_str.rfind('-') - someDay_str.find('-') - 1));
-				int someDay_str_year = std::stoi(someDay_str.substr(someDay_str.rfind('-') + 1));
+				unsigned someDay_str_day = std::stoi(someDay_str.substr(0, someDay_str.find('-')));
+				unsigned someDay_str_month = std::stoi(someDay_str.substr(someDay_str.find('-') + 1, someDay_str.rfind('-') - someDay_str.find('-') - 1));
+				unsigned someDay_str_year = std::stoi(someDay_str.substr(someDay_str.rfind('-') + 1));
 
 				if (someDay_str_day != d || someDay_str_month != m || someDay_str_year != y) {
 					failures++;
@@ -94,8 +94,37 @@ void test2()
 	std::cout << "Test2 completed " << ((failures == 0) ? "successfully" : "unsuccessfully") << " with " << failures << " exceptions found!" << std::endl;
 }
 
+
 void test3()
 {
+	int failures = 0;
+	const std::array<unsigned, 12> days_in_month = { {31,28,31,30,31,30,31,31,30,31,30,31} };
+	const std::array<unsigned, 12> days_in_month_leap = { {31,29,31,30,31,30,31,31,30,31,30,31} };
+	for (unsigned y = 1900; y < 2200; ++y) {
+		for (unsigned m = 1; m <= 12; ++m) {
+			unsigned dmax = ((Date::is_leap_year(y)) ? days_in_month_leap[m - 1] : days_in_month[m - 1]);
+			for (unsigned d = 1; d <= dmax; ++d) {
+
+				//end the test when loop till 31-Dec-2199
+				if (y == 2199 && m == 12 && d == 31) 
+				{
+					std::cout << "Test3 completed " << ((failures == 0) ? "successfully" : "unsuccessfully") << " with " << failures << " exceptions found!" << std::endl;
+				}
+				else 
+				{
+					Date d1(y, m, d);
+					//move on to the next day:
+					unsigned y_n, m_n, d_n;
+					(d == dmax) ? (d_n = 1, (m == 12) ? (m_n = 1, y_n = y + 1) : (m_n = m + 1, y_n = y)) : (d_n = d + 1, m_n = m, y_n = y);
+					Date d2(y_n, m_n, d_n);
+
+					if (d2 - d1 != 1) failures++;
+					
+				}
+
+			}
+		}
+	}
 }
 
 int main()
@@ -107,29 +136,10 @@ int main()
 	 
 	std::cout << Date::is_leap_year(1996) << std::endl;
 
-	Date y(2019, 3, 1);
-	std::cout << y.to_string() << std::endl;
-	std::cout << y.to_string(false) << std::endl;
+	Date sd(2019, 3, 1);
+	std::cout << sd.to_string() << std::endl;
+	std::cout << sd.to_string(false) << std::endl;
 
-	//unsigned i = 109572;
-	//::cout << ((Date*)NULL)->get_year(i) << std::endl;
-	//std::cout << ((Date*)NULL)->get_month(i) << std::endl;
-	//std::cout << ((Date*)NULL)->get_day(i) << std::endl;
     return 0;
 }
 
-
-#if 0
-DateInitializer a;
-const std::array<unsigned, Date::n_years> b(static_cast<const std::array<unsigned, Date::n_years>&>(DateInitializer()));
-
-for (auto i = a.begin(), e = a.end(); i != e; ++i) {
-	cout << *i << " ";
-}
-
-std::cout << std::endl << std::endl;
-
-for (auto i = b.begin(), e = b.end(); i != e; ++i) {
-	cout << *i << " ";
-}
-#endif 

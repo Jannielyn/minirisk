@@ -90,9 +90,7 @@ unsigned Date::get_day(unsigned s) const
 }
 
 
-/*  The function calculates the distance between two Dates.
-    d1 > d2 is allowed, which returns the negative of d2-d1.
-*/
+//  The function calculates the distance between two Dates. d1 > d2 is allowed, which returns the negative of d2-d1.
 long operator-(const Date& d1, const Date& d2)
 {
     unsigned s1 = d1.m_serial;

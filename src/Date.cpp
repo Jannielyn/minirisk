@@ -59,15 +59,15 @@ std::array<unsigned,3> Date::get_day_month_year(unsigned s) const {
 	unsigned y = std::upper_bound(days_epoch.begin(), days_epoch.end(), s) - days_epoch.begin() - 1;
 	ret[2] = first_year + y;
 	s -= days_epoch[y];
-	unsigned flag = 0;
+	bool flag = false;
 	if (is_leap_year(ret[2]) && s > 58) {
 		s--;
-		flag = 1;
+		flag = true;
 	}
 	unsigned m = std::upper_bound(days_ytd.begin(), days_ytd.end(), s) - days_ytd.begin() - 1;
 	ret[1] = 1 + m;
 	ret[0] = 1 + s - days_ytd[m];
-	if (m == 1) ret[0] += flag;
+	if (m == 1 && flag) ret[0] += 1;
 	return ret;
 }
 

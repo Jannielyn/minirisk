@@ -77,15 +77,11 @@ void test2()
 			unsigned dmax = ((Date::is_leap_year(y)) ? days_in_month_leap[m - 1] : days_in_month[m - 1]);
 			for (unsigned d = 1; d <= dmax; ++d) {
 				
-				Date someDay(y, m, d);	//date stored serial format
-				std::string someDay_str = someDay.to_string(); //convert the serial date back to string in calander format (e.g. 1-1-1900)
+				Date ds(y, m, d);	//date stored serial format
+				std::string ds_str = ds.to_string(); //convert the serial date back to string in calander format (e.g. 1-1-1900)
+				std::string cal = std::to_string(d) + '-' + std::to_string(m) + '-' + std::to_string(y);
 
-				//get the day, month, year out of the string respectively 
-				unsigned someDay_str_day = std::stoi(someDay_str.substr(0, someDay_str.find('-')));
-				unsigned someDay_str_month = std::stoi(someDay_str.substr(someDay_str.find('-') + 1, someDay_str.rfind('-') - someDay_str.find('-') - 1));
-				unsigned someDay_str_year = std::stoi(someDay_str.substr(someDay_str.rfind('-') + 1));
-
-				if (someDay_str_day != d || someDay_str_month != m || someDay_str_year != y) {
+				if (cal.compare(ds_str) != 0) {
 					failures++;
 				}
 			}

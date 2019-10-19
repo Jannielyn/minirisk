@@ -83,10 +83,13 @@ inline my_ofstream& operator<<(my_ofstream& os, const T& v)
 //
 
 
-// when saving a double to a file in text format, use the maximum possible precision
-inline my_ofstream& operator<<(my_ofstream& os, double v)
+// when saving a double to a file in text format, convert it to hex uint64 
+inline my_ofstream& operator<<(my_ofstream& os, const double& v)
 {
-    os.m_of << std::scientific << std::setprecision(16) << v << separator;
+	union { uint64_t u; double d; } tmp;
+	tmp.d = v;
+	os.m_of << std::hex << tmp.u << separator;
+    //os.m_of << std::scientific << std::setprecision(16) << v << separator;
     return os;
 }
 
@@ -150,12 +153,24 @@ inline my_ifstream& operator>>(my_ifstream& is, Date& v)
 		unsigned m = std::atoi(tmp.substr(4, 2).c_str());
 		unsigned d = std::atoi(tmp.substr(6, 2).c_str());
 		v.init(y, m, d);
-	}
+	}  // YYYYMMDD format
 	else {
 		unsigned s = std::atoi(tmp.c_str());
 		v.init(s);
-	}
+	}  // Serial format
     return is;
+}
+
+// when reading a double to a file in text format, convert it from hex uint64
+inline my_ifstream& operator>>(my_ifstream& is, double& v) 
+{
+	string s;
+	is >> s;
+	std::istringstream buffer(s);
+	union { uint64_t u; double d; } tmp;
+	buffer >> std::hex >> tmp.u;
+	v = tmp.d;
+	return is;
 }
 
 } // namespace minirisk

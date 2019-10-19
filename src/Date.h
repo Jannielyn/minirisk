@@ -118,7 +118,7 @@ public:
 		auto ret = get_day_month_year(m_serial);
 		return pretty
 			? std::to_string(ret[0]) + "-" + std::to_string(ret[1]) + "-" + std::to_string(ret[2])
-			: std::to_string(ret[0]) + padding_dates(ret[1]) + padding_dates(ret[2]);
+			: std::to_string(ret[2]) + padding_dates(ret[1]) + padding_dates(ret[0]);
 	}
 
 private:

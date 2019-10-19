@@ -1,4 +1,2 @@
-﻿  TestDate.cpp
-C:\Users\kirit\Desktop\MFE\Sem 1\FE5226\minirisk\src\TestDate.cpp(32,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\kirit\Desktop\MFE\Sem 1\FE5226\minirisk\src\TestDate.cpp(50,40): warning C4101:  'x': unreferenced local variable
+﻿  Date.cpp
   TestDate.vcxproj -> C:\Users\kirit\Desktop\MFE\Sem 1\FE5226\minirisk\TestDate\Debug\TestDate.exe

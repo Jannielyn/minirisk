@@ -25,9 +25,11 @@ private:
     static const std::array<unsigned, 12> days_ytd;      // num of days since 1-jan to 1-M in a normal year
     static const std::array<unsigned, n_years> days_epoch;   // num of days since 1-jan-1900 to 1-jan-yyyy (until 2200)
 
-	unsigned get_year(unsigned s) const;
-	unsigned get_month(unsigned s) const;
-	unsigned get_day(unsigned s) const;
+	//unsigned get_year(unsigned s) const;
+	//unsigned get_month(unsigned s) const;
+	//unsigned get_day(unsigned s) const;
+
+	std::array<unsigned,3> get_day_month_year(unsigned s) const;
 
 public:
     // Default constructor
@@ -113,9 +115,10 @@ public:
 	// In D-M-YYYY format or YYYYMMDD format
 	std::string to_string(bool pretty = true) const
 	{
+		auto ret = get_day_month_year(m_serial);
 		return pretty
-			? std::to_string(get_day(m_serial)) + "-" + std::to_string(get_month(m_serial)) + "-" + std::to_string(get_year(m_serial))
-			: std::to_string(get_year(m_serial)) + padding_dates(get_month(m_serial)) + padding_dates(get_day(m_serial));
+			? std::to_string(ret[0]) + "-" + std::to_string(ret[1]) + "-" + std::to_string(ret[2])
+			: std::to_string(ret[0]) + padding_dates(ret[1]) + padding_dates(ret[2]);
 	}
 
 private:

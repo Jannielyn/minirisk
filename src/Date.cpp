@@ -1,6 +1,8 @@
 #include <iomanip>
 #include <iostream>
 #include "Date.h"
+#include <algorithm>
+#include <array>
 
 namespace minirisk {
 
@@ -52,6 +54,24 @@ unsigned Date::day_of_year(unsigned y, unsigned m, unsigned d) const
     return days_ytd[m - 1] + ((m > 2 && is_leap_year(y)) ? 1 : 0) + (d - 1);
 }
 
+std::array<unsigned,3> Date::get_day_month_year(unsigned s) const {
+	std::array<unsigned,3> ret; // ret[0] = day, ret[1] = month, ret[2] = year
+	unsigned y = std::upper_bound(days_epoch.begin(), days_epoch.end(), s) - days_epoch.begin() - 1;
+	ret[2] = first_year + y;
+	s -= days_epoch[y];
+	unsigned flag = 0;
+	if (is_leap_year(ret[2]) && s > 58) {
+		s--;
+		flag = 1;
+	}
+	unsigned m = std::upper_bound(days_ytd.begin(), days_ytd.end(), s) - days_ytd.begin() - 1;
+	ret[1] = 1 + m;
+	ret[0] = 1 + s - days_ytd[m];
+	if (m == 1) ret[0] += flag;
+	return ret;
+}
+
+/*
 unsigned Date::get_year(unsigned s) const
 {
 	unsigned year = Date::first_year - 1;
@@ -88,7 +108,7 @@ unsigned Date::get_day(unsigned s) const
 	unsigned days = 1 + days_in_year - ((is_leap_year(year) && month > 2) ? days_ytd[month - 1] + 1 : days_ytd[month - 1]);
 	return days;
 }
-
+*/
 
 //  The function calculates the distance between two Dates. d1 > d2 is allowed, which returns the negative of d2-d1.
 long operator-(const Date& d1, const Date& d2)

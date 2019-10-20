@@ -1,6 +1,6 @@
 #include "Market.h"
 #include "CurveDiscount.h"
-
+#include <regex>
 #include <vector>
 
 namespace minirisk {
@@ -31,11 +31,49 @@ double Market::from_mds(const string& objtype, const string& name)
     return ins.first->second;
 }
 
+/*
 const double Market::get_yield(const string& ccyname)
 {
     string name(ir_rate_prefix + ccyname);
     return from_mds("yield curve", name);
 };
+*/
+
+unsigned Market::convert_regex_to_days(const string& name, const string& ccy) 
+{
+	unsigned p = std::stoi(name.substr(ir_rate_prefix.length(), name.length() - ccy.length() - ir_rate_prefix.length() - 2));
+	unsigned char c = *(name.end() - ccy.length() - 2);
+	unsigned q = 0;
+	switch (c) {
+		case 'D': q = 1; break;
+		case 'W': q = 7; break;
+		case 'M': q = 30; break;
+		case 'Y': q = 365; break;
+		default: MYASSERT(c, "Cannot fetch yield curve because no such interest rate");
+	}
+	return p * q;
+}
+
+const std::map<unsigned, double> Market::get_yield(const string& ccy)
+{
+	string expr = ir_rate_prefix + "\\d+[DWMY]." + ccy;
+	std::map<unsigned, double> rates;
+	rates[0] = 0.0;   //initiate
+	if (m_mds) {
+		std::vector<std::string> names = m_mds->match(expr);
+		for (const auto& n : names) {
+			rates.emplace(convert_regex_to_days(n, ccy), from_mds("yield curve", n));
+		}
+	}
+	else {
+		for (const auto& r : m_risk_factors) {
+			if (std::regex_match(r.first, std::regex(expr)))
+				rates.emplace(convert_regex_to_days(r.first, ccy), from_mds("yield curve", r.first));
+		}
+	}
+
+	return rates;
+}
 
 const double Market::get_fx_spot(const string& name)
 {
@@ -44,7 +82,7 @@ const double Market::get_fx_spot(const string& name)
 
 void Market::set_risk_factors(const vec_risk_factor_t& risk_factors)
 {
-    clear();
+	clear();
     for (const auto& d : risk_factors) {
         auto i = m_risk_factors.find(d.first);
         MYASSERT((i != m_risk_factors.end()), "Risk factor not found " << d.first);

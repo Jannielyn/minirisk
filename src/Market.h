@@ -35,7 +35,9 @@ public:
     const ptr_disc_curve_t get_discount_curve(const string& name);
 
     // yield rate for currency name
-    const double get_yield(const string& name);
+    // const double get_yield(const string& name);
+	const std::map<unsigned, double> get_yield(const string& ccy);
+
 
     // fx exchange rate to convert 1 unit of ccy1 into USD
     const double get_fx_spot(const string& ccy);
@@ -68,6 +70,9 @@ private:
 
     // raw risk factors
     std::map<string, double> m_risk_factors;
+
+	// convert regex to days
+	unsigned convert_regex_to_days(const string& name, const string& ccy);
 };
 
 } // namespace minirisk

@@ -26,9 +26,12 @@ int main()
 		double y = -0.15625;
 		my_ofstream outfile(cd + "DemoHex.txt");
 		outfile << y;
+		outfile.endl();
+		outfile.close();
 
 		my_ifstream infile(cd + "DemoHex.txt");
 		double i;
+		infile.read_line();
 		infile >> i;
 		std::cout << i << std::endl;
 	}

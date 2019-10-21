@@ -18,18 +18,14 @@ int main()
     tmp.d = x;
     std::cout << std::hex << tmp.u << std::endl;
 
-
-	string main_path = __FILE__;
-	string cd = main_path.substr(0, main_path.rfind("DemoHex.cpp"));   //get cd of this working file
-	std::cout << cd << std::endl;
 	{
 		double y = -0.15625;
-		my_ofstream outfile(cd + "DemoHex.txt");
+		my_ofstream outfile("../../data/DemoHex.txt");
 		outfile << y;
 		outfile.endl();
 		outfile.close();
 
-		my_ifstream infile(cd + "DemoHex.txt");
+		my_ifstream infile("../../data/DemoHex.txt");
 		double i;
 		infile.read_line();
 		infile >> i;

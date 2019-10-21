@@ -129,13 +129,7 @@ int main()
     test2();
     test3();
 
-	 
-	std::cout << Date::is_leap_year(1996) << std::endl;
-
-	Date sd(2019, 3, 1);
-	std::cout << sd.to_string() << std::endl;
-	std::cout << sd.to_string(false) << std::endl;
-
+	
     return 0;
 }
 

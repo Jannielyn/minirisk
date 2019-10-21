@@ -161,7 +161,7 @@ inline my_ifstream& operator>>(my_ifstream& is, Date& v)
     return is;
 }
 
-// when reading a double to a file in text format, convert it from hex uint64
+// when reading a double from a file in text format, convert it from hex uint64 to double
 inline my_ifstream& operator>>(my_ifstream& is, double& v) 
 {
 	string s;

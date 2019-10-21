@@ -29,7 +29,7 @@ private:
 	//unsigned get_month(unsigned s) const;
 	//unsigned get_day(unsigned s) const;
 
-	std::array<unsigned,3> get_day_month_year(unsigned s) const;
+	std::array<unsigned, 3> get_day_month_year(unsigned s) const;
 
 public:
     // Default constructor
@@ -101,6 +101,8 @@ public:
 
 	unsigned get_serial() const { return m_serial; }
 
+	
+
     static bool is_leap_year(unsigned yr);
 
     /*// In YYYYMMDD format
@@ -120,6 +122,7 @@ public:
 			? std::to_string(ret[0]) + "-" + std::to_string(ret[1]) + "-" + std::to_string(ret[2])
 			: std::to_string(ret[2]) + padding_dates(ret[1]) + padding_dates(ret[0]);
 	}
+	
 
 private:
 	unsigned m_serial;

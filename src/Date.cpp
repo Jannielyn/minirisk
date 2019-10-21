@@ -54,7 +54,7 @@ unsigned Date::day_of_year(unsigned y, unsigned m, unsigned d) const
     return days_ytd[m - 1] + ((m > 2 && is_leap_year(y)) ? 1 : 0) + (d - 1);
 }
 
-std::array<unsigned,3> Date::get_day_month_year(unsigned s) const {
+std::array<unsigned,3> Date::get_day_month_year(unsigned s) const{
 	std::array<unsigned,3> ret; // ret[0] = day, ret[1] = month, ret[2] = year
 	unsigned y = std::upper_bound(days_epoch.begin(), days_epoch.end(), s) - days_epoch.begin() - 1;
 	ret[2] = first_year + y;

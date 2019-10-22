@@ -18,6 +18,11 @@ int main()
     tmp.d = x;
     std::cout << std::hex << tmp.u << std::endl;
 
+
+	/*Q3 Demo below:
+	when writing: given a double -> reinterpret as a 64 bits integer -> save in hex format as string
+	when reading: read the string in hex format -> convert to 64 bits integer -> reinterpret as double
+	*/
 	{
 		double y = -0.15625;
 		my_ofstream outfile("../../data/DemoHex.txt");
@@ -31,8 +36,6 @@ int main()
 		infile >> i;
 		std::cout << i << std::endl;
 	}
-	
-	//my_ifstream infile(double c);
 
     return 0;
 }

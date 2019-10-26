@@ -1,15 +1,3 @@
 ﻿  CurveDiscount.cpp
-  Date.cpp
-C:\Users\User\Documents\CPP\minirisk\src\CurveDiscount.cpp(20,2): warning C4018:  '>': signed/unsigned mismatch
-C:\Users\User\Documents\CPP\minirisk\src\Date.cpp(59,13): warning C4244:  'initializing': conversion from 'ptrdiff_t' to 'unsigned int', possible loss of data
-  DemoRisk.cpp
-  Global.cpp
-  Market.cpp
-  MarketDataServer.cpp
-  PortfolioUtils.cpp
-  PricerPayment.cpp
-  TradeGuids.cpp
-  TradePayment.cpp
-  Generating Code...
-C:\Users\User\Documents\CPP\minirisk\src\Date.cpp(67,13): warning C4244:  'initializing': conversion from 'ptrdiff_t' to 'unsigned int', possible loss of data
-  minirisk.vcxproj -> C:\Users\User\Documents\CPP\minirisk\vs\x64\Debug\minirisk.exe
+C:\Users\kirit\Desktop\MFE\Sem 1\FE5226\minirisk\src\CurveDiscount.cpp(20,1): warning C4018:  '>': signed/unsigned mismatch
+  minirisk.vcxproj -> C:\Users\kirit\Desktop\MFE\Sem 1\FE5226\minirisk\vs\x64\Debug\minirisk.exe

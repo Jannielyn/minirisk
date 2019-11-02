@@ -120,6 +120,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\CurveDiscount.cpp" />
+    <ClCompile Include="..\..\src\CurveFXSpot.cpp" />
     <ClCompile Include="..\..\src\Date.cpp" />
     <ClCompile Include="..\..\src\DemoRisk.cpp" />
     <ClCompile Include="..\..\src\Global.cpp" />
@@ -132,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\CurveDiscount.h" />
+    <ClInclude Include="..\..\src\CurveFXSpot.h" />
     <ClInclude Include="..\..\src\Date.h" />
     <ClInclude Include="..\..\src\Global.h" />
     <ClInclude Include="..\..\src\ICurve.h" />

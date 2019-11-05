@@ -1,6 +1,7 @@
 #include "PricerPayment.h"
 #include "TradePayment.h"
 #include "CurveDiscount.h"
+#include "CurveFXSpot.h"
 
 namespace minirisk {
 

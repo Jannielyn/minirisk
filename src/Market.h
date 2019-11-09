@@ -37,13 +37,15 @@ public:
 	// get an object of type ICurveFXSpot
 	const ptr_fxspot_curve_t get_fxspot_curve(const string& name);
 
+	// get an object of type ICurveFXForward
+	const ptr_fxforward_curve_t get_fxforward_curve(const string& name);
+
     // yield rate for currency name
     // const double get_yield(const string& name);
 	const std::map<unsigned, double> get_yield(const string& ccy);
 
-
     // fx exchange rate to convert 1 unit of ccy1 into ccy2
-    const double get_fx_spot(const string& name);
+    const double get_fx_spot(const string& ccy1, const string& ccy2);
 
     // after the market has been disconnected, it is no more possible to fetch
     // new data points from the market data server

@@ -120,21 +120,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\CurveDiscount.cpp" />
+    <ClCompile Include="..\..\src\CurveFXForward.cpp" />
     <ClCompile Include="..\..\src\CurveFXSpot.cpp" />
     <ClCompile Include="..\..\src\Date.cpp" />
     <ClCompile Include="..\..\src\DemoRisk.cpp" />
+    <ClCompile Include="..\..\src\FixingDataServer.cpp" />
     <ClCompile Include="..\..\src\Global.cpp" />
     <ClCompile Include="..\..\src\Market.cpp" />
     <ClCompile Include="..\..\src\MarketDataServer.cpp" />
     <ClCompile Include="..\..\src\PortfolioUtils.cpp" />
+    <ClCompile Include="..\..\src\PricerFXForward.cpp" />
     <ClCompile Include="..\..\src\PricerPayment.cpp" />
+    <ClCompile Include="..\..\src\TradeFXForward.cpp" />
     <ClCompile Include="..\..\src\TradeGuids.cpp" />
     <ClCompile Include="..\..\src\TradePayment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\CurveDiscount.h" />
+    <ClInclude Include="..\..\src\CurveFXForward.h" />
     <ClInclude Include="..\..\src\CurveFXSpot.h" />
     <ClInclude Include="..\..\src\Date.h" />
+    <ClInclude Include="..\..\src\FixingDataServer.h" />
     <ClInclude Include="..\..\src\Global.h" />
     <ClInclude Include="..\..\src\ICurve.h" />
     <ClInclude Include="..\..\src\IObject.h" />
@@ -145,9 +151,11 @@
     <ClInclude Include="..\..\src\MarketDataServer.h" />
     <ClInclude Include="..\..\src\PortfolioUtils.h" />
     <ClInclude Include="..\..\src\Pricer.h" />
+    <ClInclude Include="..\..\src\PricerFXForward.h" />
     <ClInclude Include="..\..\src\PricerPayment.h" />
     <ClInclude Include="..\..\src\Streamer.h" />
     <ClInclude Include="..\..\src\Trade.h" />
+    <ClInclude Include="..\..\src\TradeFXForward.h" />
     <ClInclude Include="..\..\src\TradePayment.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

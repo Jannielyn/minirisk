@@ -3,10 +3,11 @@
 
 #include "MarketDataServer.h"
 #include "PortfolioUtils.h"
+#include "FixingDataServer.h"
 
 using namespace::minirisk;
 
-void run(const string& portfolio_file, const string& risk_factors_file, const string& baseccy)
+void run(const string& portfolio_file, const string& risk_factors_file, const string& baseccy, const string& fixing_file)
 {
     // load the portfolio from file
     portfolio_t portfolio = load_portfolio(portfolio_file);
@@ -18,6 +19,8 @@ void run(const string& portfolio_file, const string& risk_factors_file, const st
     // display portfolio
     print_portfolio(portfolio);
 
+	// initialize fixing data server
+
     // get pricers
     std::vector<ppricer_t> pricers(get_pricers(portfolio, baseccy));
 
@@ -27,11 +30,12 @@ void run(const string& portfolio_file, const string& risk_factors_file, const st
     // Init market object
     Date today(2017,8,5);
     Market mkt(mds, today);
+	FixingDataServer fds(fixing_file);
 
     // Price all products. Market objects are automatically constructed on demand,
     // fetching data as needed from the market data server.
     {
-        auto prices = compute_prices(pricers, mkt);
+        auto prices = compute_prices(pricers, mkt, fds);
         print_price_vector("PV", prices);
     }
 
@@ -48,16 +52,21 @@ void run(const string& portfolio_file, const string& risk_factors_file, const st
     }
 
     {   // Compute PV01 (i.e. sensitivity with respect to interest rate dV/dr)
-        std::vector<std::pair<string, portfolio_values_t>> pv01_bucketed(compute_pv01_bucketed(pricers,mkt));  // PV01 per trade
+        std::vector<std::pair<string, portfolio_values_t>> pv01_bucketed(compute_pv01_bucketed(pricers, mkt, fds));  // PV01 per trade
 
         // display PV01 per currency
         for (const auto& g : pv01_bucketed)
             print_price_vector("PV01 Bucketed " + g.first, g.second);
 
-		std::vector<std::pair<string, portfolio_values_t>> pv01_parallel(compute_pv01_parallel(pricers, mkt));  // PV01 per trade
+		std::vector<std::pair<string, portfolio_values_t>> pv01_parallel(compute_pv01_parallel(pricers, mkt, fds));  // PV01 per trade
 
 		for (const auto& g : pv01_parallel)
 			print_price_vector("PV01 Parallel " + g.first, g.second);
+
+		std::vector<std::pair<string, portfolio_values_t>> fx_delta(compute_fx_delta(pricers, mkt, fds));    // fx delta
+
+		for (const auto& g : fx_delta)
+			print_price_vector("FX delta " + g.first, g.second);
     }
 }
 
@@ -73,7 +82,7 @@ void usage()
 int main(int argc, const char **argv)
 {
     // parse command line arguments
-	string portfolio, riskfactors;
+	string portfolio, riskfactors, fixing;
 	string baseccy = "USD";
     if (argc % 2 == 0)
         usage();
@@ -86,6 +95,8 @@ int main(int argc, const char **argv)
 			riskfactors = value;
 		else if (key == "-b")
 			baseccy = value;
+		else if (key == "-x")
+			fixing = value;
         else
             usage();
     }
@@ -93,7 +104,7 @@ int main(int argc, const char **argv)
         usage();
 
     try {
-        run(portfolio, riskfactors, baseccy);
+        run(portfolio, riskfactors, baseccy, fixing);
         return 0;  // report success to the caller
     }
     catch (const std::exception& e)

@@ -1,6 +1,7 @@
 #include "Market.h"
 #include "CurveDiscount.h"
 #include "CurveFXSpot.h"
+#include "CurveFXForward.h"
 #include <regex>
 #include <vector>
 
@@ -25,6 +26,11 @@ const ptr_disc_curve_t Market::get_discount_curve(const string& name)
 const ptr_fxspot_curve_t Market::get_fxspot_curve(const string& name)
 {
 	return get_curve<ICurveFXSpot, CurveFXSpot>(name);
+}
+
+const ptr_fxforward_curve_t Market::get_fxforward_curve(const string& name)
+{
+	return get_curve<ICurveFXForward, CurveFXForward>(name);
 }
 
 double Market::from_mds(const string& objtype, const string& name)
@@ -81,10 +87,8 @@ const std::map<unsigned, double> Market::get_yield(const string& ccy)
 	return rates;
 }
 
-const double Market::get_fx_spot(const string& name)
+const double Market::get_fx_spot(const string& ccy1, const string& ccy2)
 {
-	string ccy1 = name.substr(name.length() - 7, 3);
-	string ccy2 = name.substr(name.length() - 3, 3);
 	double c1 = ccy1 == "USD"? 1.0: from_mds("fx spot", fx_spot_prefix + ccy1);
 	double c2 = ccy2 == "USD"? 1.0: from_mds("fx spot", fx_spot_prefix + ccy2);
 	return c1 / c2;

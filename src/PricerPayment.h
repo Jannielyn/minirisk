@@ -9,7 +9,7 @@ struct PricerPayment : Pricer
 {
     PricerPayment(const TradePayment& trd, const string& baseccy);
 
-    virtual double price(Market& m) const;
+    virtual double price(Market& m, const FixingDataServer& fds) const;
 
 private:
     double m_amt;

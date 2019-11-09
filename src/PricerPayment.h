@@ -1,11 +1,11 @@
 #pragma once
 
-#include "IPricer.h"
+#include "Pricer.h"
 #include "TradePayment.h"
 
 namespace minirisk {
 
-struct PricerPayment : IPricer
+struct PricerPayment : Pricer
 {
     PricerPayment(const TradePayment& trd, const string& baseccy);
 

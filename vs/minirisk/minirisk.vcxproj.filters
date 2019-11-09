@@ -98,5 +98,8 @@
     <ClInclude Include="..\..\src\CurveFXSpot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Pricer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

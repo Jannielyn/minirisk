@@ -144,6 +144,7 @@
     <ClInclude Include="..\..\src\Market.h" />
     <ClInclude Include="..\..\src\MarketDataServer.h" />
     <ClInclude Include="..\..\src\PortfolioUtils.h" />
+    <ClInclude Include="..\..\src\Pricer.h" />
     <ClInclude Include="..\..\src\PricerPayment.h" />
     <ClInclude Include="..\..\src\Streamer.h" />
     <ClInclude Include="..\..\src\Trade.h" />

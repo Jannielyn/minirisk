@@ -6,10 +6,11 @@
 namespace minirisk {
 
 PricerPayment::PricerPayment(const TradePayment& trd, const string& baseccy)
-    : m_amt(trd.quantity())
+    : Pricer(baseccy)
+	, m_amt(trd.quantity())
     , m_dt(trd.delivery_date())
     , m_ir_curve(ir_curve_discount_name(trd.ccy()))
-    , m_fx_ccy(fx_spot_name(trd.ccy(), baseccy))
+    , m_fx_ccy(fx_spot_name(trd.ccy(), m_baseccy))
 {
 }
 

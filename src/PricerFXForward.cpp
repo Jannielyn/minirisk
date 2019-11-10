@@ -29,18 +29,20 @@ double PricerFXForward::price(Market& mkt, const FixingDataServer& fds) const
 	if (mkt.today() > m_ft) {
 		fw = fds.get(fx_spot_name(m_ccy1, m_ccy2), m_ft);
 	}
-	else if (mkt.today() == m_ft) {
-		auto ins = fds.lookup(fx_spot_name(m_ccy1, m_ccy2), m_ft);
-		if (ins.second)
-			fw = ins.first;
-		else {
-			ptr_fxspot_curve_t fxs = mkt.get_fxspot_curve(fx_spot_name(m_ccy1, m_ccy2));
-			fw = fxs->spot();
-		}
-	}
 	else {
-		ptr_fxforward_curve_t fwdc = mkt.get_fxforward_curve(fx_forward_name(m_ccy1, m_ccy2));
-		fw = fwdc->fwd(m_ft);
+		if (mkt.today() == m_ft) {
+			auto ins = fds.lookup(fx_spot_name(m_ccy1, m_ccy2), m_ft);
+			if (ins.second)
+				fw = ins.first;
+			else {
+				ptr_fxspot_curve_t fxs = mkt.get_fxspot_curve(fx_spot_name(m_ccy1, m_ccy2));
+				fw = fxs->spot();
+			}
+		}
+		else {
+			ptr_fxforward_curve_t fwdc = mkt.get_fxforward_curve(fx_forward_name(m_ccy1, m_ccy2));
+			fw = fwdc->fwd(m_ft);	
+		}
 	}
 
     return m_amt * df * (fw - m_s) * sp;

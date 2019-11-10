@@ -8,8 +8,8 @@ CurveFXForward::CurveFXForward(Market *mkt, const Date& today, const string& cur
     : m_today(today)
     , m_name(curve_name)
     , m_fx_curve(mkt->get_fxspot_curve(fx_spot_name(curve_name.substr(curve_name.length() - 7, 3), curve_name.substr(curve_name.length() - 3, 3))))
-	, m_disc_curve_1(mkt->get_discount_curve(curve_name.substr(curve_name.length() - 7, 3)))
-	, m_disc_curve_2(mkt->get_discount_curve(curve_name.substr(curve_name.length() - 3, 3)))
+	, m_disc_curve_1(mkt->get_discount_curve(ir_curve_discount_name(curve_name.substr(curve_name.length() - 7, 3))))
+	, m_disc_curve_2(mkt->get_discount_curve(ir_curve_discount_name(curve_name.substr(curve_name.length() - 3, 3))))
 {
 }
 

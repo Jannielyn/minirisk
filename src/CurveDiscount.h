@@ -6,6 +6,8 @@ namespace minirisk {
 
 struct Market;
 
+typedef std::map<unsigned, double> disc_rates_t;
+
 struct CurveDiscount : ICurveDiscount
 {
     virtual string name() const { return m_name; }
@@ -21,7 +23,7 @@ private:
     Date   m_today;
     string m_name;
     // double m_rate;
-	std::map<unsigned, double> m_rates;
+	disc_rates_t m_rates;
 };
 
 } // namespace minirisk

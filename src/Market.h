@@ -4,6 +4,7 @@
 #include "IObject.h"
 #include "ICurve.h"
 #include "MarketDataServer.h"
+#include "CurveDiscount.h"
 #include <vector>
 #include <regex>
 
@@ -42,7 +43,7 @@ public:
 
     // yield rate for currency name
     // const double get_yield(const string& name);
-	const std::map<unsigned, double> get_yield(const string& ccy);
+	const disc_rates_t get_yield(const string& ccy);
 
     // fx exchange rate to convert 1 unit of ccy1 into ccy2
     const double get_fx_spot(const string& ccy1, const string& ccy2);
@@ -62,6 +63,10 @@ public:
     {
         std::for_each(m_curves.begin(), m_curves.end(), [](auto& p) { p.second.reset(); });
     }
+
+	void clear(const string& rf) {
+		m_curves[rf].reset();
+	}
 
     // destroy all existing objects and modify a selected number of data points
     void set_risk_factors(const vec_risk_factor_t& risk_factors);

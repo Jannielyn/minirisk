@@ -1,5 +1,4 @@
 #include "Market.h"
-#include "CurveDiscount.h"
 #include "CurveFXSpot.h"
 #include "CurveFXForward.h"
 #include <regex>
@@ -66,21 +65,25 @@ unsigned Market::convert_regex_to_days(const string& name, const string& ccy)
 	return p * q;
 }
 
-const std::map<unsigned, double> Market::get_yield(const string& ccy)
+const disc_rates_t Market::get_yield(const string& ccy)
 {
 	string expr = ir_rate_prefix + "\\d+[DWMY]." + ccy;
-	std::map<unsigned, double> rates;
-	rates[0] = 0.0;   //initiate
+	disc_rates_t rates;
+	unsigned T;
+	rates.emplace(0, 0.0);   //initiate
 	if (m_mds) {
 		std::vector<std::string> names = m_mds->match(expr);
 		for (const auto& n : names) {
-			rates.emplace(convert_regex_to_days(n, ccy), from_mds("yield curve", n));
+			T = convert_regex_to_days(n, ccy);
+			rates.emplace(T, static_cast<double> (T * from_mds("yield curve", n)));
 		}
 	}
 	else {
 		for (const auto& r : m_risk_factors) {
-			if (std::regex_match(r.first, std::regex(expr)))
-				rates.emplace(convert_regex_to_days(r.first, ccy), from_mds("yield curve", r.first));
+			if (std::regex_match(r.first, std::regex(expr))) {
+				T = convert_regex_to_days(r.first, ccy);
+				rates.emplace(T, static_cast<double> (T * from_mds("yield curve", r.first)));
+			}
 		}
 	}
 
@@ -98,7 +101,7 @@ void Market::set_risk_factors(const vec_risk_factor_t& risk_factors)
 {
 	clear();
     for (const auto& d : risk_factors) {
-        auto i = m_risk_factors.find(d.first);
+		auto i = m_risk_factors.find(d.first);
         MYASSERT((i != m_risk_factors.end()), "Risk factor not found " << d.first);
         i->second = d.second;
     }

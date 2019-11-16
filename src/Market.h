@@ -1,10 +1,10 @@
 #pragma once
-
 #include "Global.h"
 #include "IObject.h"
-#include "ICurve.h"
-#include "MarketDataServer.h"
 #include "CurveDiscount.h"
+#include "CurveFXSpot.h"
+#include "CurveFXForward.h"
+#include "MarketDataServer.h"
 #include <vector>
 #include <regex>
 
@@ -18,6 +18,9 @@ private:
     std::shared_ptr<const I> get_curve(const string& name);
 
     double from_mds(const string& objtype, const string& name);
+
+	// convert regex to days
+	unsigned convert_regex_to_days(const string& name, const string& ccy);
 
 public:
 
@@ -43,7 +46,7 @@ public:
 
     // yield rate for currency name
     // const double get_yield(const string& name);
-	const disc_rates_t get_yield(const string& ccy);
+	const std::map<unsigned, double> get_yield(const string& ccy);
 
     // fx exchange rate to convert 1 unit of ccy1 into ccy2
     const double get_fx_spot(const string& ccy1, const string& ccy2);
@@ -64,10 +67,6 @@ public:
         std::for_each(m_curves.begin(), m_curves.end(), [](auto& p) { p.second.reset(); });
     }
 
-	void clear(const string& rf) {
-		m_curves[rf].reset();
-	}
-
     // destroy all existing objects and modify a selected number of data points
     void set_risk_factors(const vec_risk_factor_t& risk_factors);
 
@@ -81,8 +80,6 @@ private:
     // raw risk factors
     std::map<string, double> m_risk_factors;
 
-	// convert regex to days
-	unsigned convert_regex_to_days(const string& name, const string& ccy);
 };
 
 } // namespace minirisk

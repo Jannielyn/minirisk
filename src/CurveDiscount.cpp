@@ -4,7 +4,6 @@
 
 #include <cmath>
 
-
 namespace minirisk {
 
 CurveDiscount::CurveDiscount(Market *mkt, const Date& today, const string& curve_name)

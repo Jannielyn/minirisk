@@ -17,7 +17,7 @@ PricerPayment::PricerPayment(const TradePayment& trd, const string& baseccy)
 double PricerPayment::price(Market& mkt, const FixingDataServer& fds) const
 {
     ptr_disc_curve_t disc = mkt.get_discount_curve(m_ir_curve);
-    double df = disc->df(m_dt); // this throws an exception if m_dt<today
+    double df = disc->df(m_dt); // this throws an exception if m_st < today or m_st > max tenor
 
 	if (m_fx_ccy.length() == 0) return m_amt * df;
 

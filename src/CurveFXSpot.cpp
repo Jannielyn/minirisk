@@ -2,8 +2,6 @@
 #include "Market.h"
 #include "Streamer.h"
 
-
-
 namespace minirisk {
 
 CurveFXSpot::CurveFXSpot(Market *mkt, const Date& today, const string& curve_name)

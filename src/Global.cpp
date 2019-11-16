@@ -16,5 +16,4 @@ string format_label(const string& s)
     return os.str();
 }
 
-
-}
+}  //namespace minirisk

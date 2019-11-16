@@ -24,8 +24,6 @@ private:
     std::map<string, double> m_data;
 };
 
-string mds_spot_name(const string& name);
-
 } // namespace minirisk
 
 

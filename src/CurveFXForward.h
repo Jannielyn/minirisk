@@ -13,6 +13,7 @@ struct CurveFXForward : ICurveFXForward
 
     virtual Date today() const { return m_today; }
 
+	//compute fx forward price
 	virtual double fwd(const Date& t) const;
 
 private:

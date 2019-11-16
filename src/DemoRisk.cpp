@@ -19,15 +19,13 @@ void run(const string& portfolio_file, const string& risk_factors_file, const st
     // display portfolio
     print_portfolio(portfolio);
 
-	// initialize fixing data server
-
     // get pricers
     std::vector<ppricer_t> pricers(get_pricers(portfolio, baseccy));
 
     // initialize market data server
     std::shared_ptr<const MarketDataServer> mds(new MarketDataServer(risk_factors_file));
 
-    // Init market object
+    // Init market and fixing data server object
     Date today(2017,8,5);
     Market mkt(mds, today);
 	FixingDataServer fds(fixing_file);
@@ -51,20 +49,24 @@ void run(const string& portfolio_file, const string& risk_factors_file, const st
         std::cout << "\n";
     }
 
-    {   // Compute PV01 (i.e. sensitivity with respect to interest rate dV/dr)
+    {   // Compute PV01 bucketed (i.e. sensitivity with respect to interest rate dV/dr)
         std::vector<std::pair<string, portfolio_values_t>> pv01_bucketed(compute_pv01_bucketed(pricers, mkt, fds));  // PV01 per trade
 
         // display PV01 per currency
         for (const auto& g : pv01_bucketed)
             print_price_vector("PV01 Bucketed " + g.first, g.second);
 
+		// Compute PV01 parallel
 		std::vector<std::pair<string, portfolio_values_t>> pv01_parallel(compute_pv01_parallel(pricers, mkt, fds));  // PV01 per trade
 
+		// display PV01 per currency
 		for (const auto& g : pv01_parallel)
 			print_price_vector("PV01 Parallel " + g.first, g.second);
 
+		// Compute FX delta
 		std::vector<std::pair<string, portfolio_values_t>> fx_delta(compute_fx_delta(pricers, mkt, fds));    // fx delta
 
+		// display FX delta per currency
 		for (const auto& g : fx_delta)
 			print_price_vector("FX delta " + g.first, g.second);
     }

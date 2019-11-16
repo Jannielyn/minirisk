@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Pricer.h"
 #include "TradeFXForward.h"
 
@@ -13,12 +12,11 @@ struct PricerFXForward : Pricer
 
 private:
     double m_amt;
-    Date m_ft;
-	Date m_st;
-	double m_s;
+    Date m_ft; //fixing date
+	Date m_st; //settle date
+	double m_s; //strike
 	string m_ccy1;
-    string m_ccy2;
+    string m_ccy2; 
 };
 
 } // namespace minirisk
-

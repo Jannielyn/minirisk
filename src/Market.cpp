@@ -1,6 +1,4 @@
 #include "Market.h"
-#include "CurveFXSpot.h"
-#include "CurveFXForward.h"
 #include <regex>
 #include <vector>
 
@@ -42,14 +40,6 @@ double Market::from_mds(const string& objtype, const string& name)
     return ins.first->second;
 }
 
-/*
-const double Market::get_yield(const string& ccyname)
-{
-    string name(ir_rate_prefix + ccyname);
-    return from_mds("yield curve", name);
-};
-*/
-
 unsigned Market::convert_regex_to_days(const string& name, const string& ccy) 
 {
 	unsigned p = std::stoi(name.substr(ir_rate_prefix.length(), name.length() - ccy.length() - ir_rate_prefix.length() - 2));
@@ -65,28 +55,29 @@ unsigned Market::convert_regex_to_days(const string& name, const string& ccy)
 	return p * q;
 }
 
-const disc_rates_t Market::get_yield(const string& ccy)
+const std::map<unsigned, double> Market::get_yield(const string& ccy)
 {
 	string expr = ir_rate_prefix + "\\d+[DWMY]." + ccy;
-	disc_rates_t rates;
+	std::map<unsigned, double> rates;
 	unsigned T;
-	rates.emplace(0, 0.0);   //initiate
+	rates.emplace(0, 0.0);    //for tenor < smallest T
+	// store T and rT 
 	if (m_mds) {
 		std::vector<std::string> names = m_mds->match(expr);
 		for (const auto& n : names) {
 			T = convert_regex_to_days(n, ccy);
-			rates.emplace(T, static_cast<double> (T * from_mds("yield curve", n)));
+			rates.emplace(T, T * from_mds("yield curve", n));
 		}
 	}
 	else {
+		std::regex reg(expr);
 		for (const auto& r : m_risk_factors) {
-			if (std::regex_match(r.first, std::regex(expr))) {
+			if (std::regex_match(r.first, reg)) {
 				T = convert_regex_to_days(r.first, ccy);
-				rates.emplace(T, static_cast<double> (T * from_mds("yield curve", r.first)));
+				rates.emplace(T, T * from_mds("yield curve", r.first));
 			}
 		}
 	}
-
 	return rates;
 }
 

@@ -8,13 +8,13 @@ namespace minirisk {
 
 struct DateInitializer : std::array<unsigned, Date::n_years>
 {
-    DateInitializer()
-    {
+	DateInitializer()
+	{
         for (unsigned i = 0, s = 0, y = Date::first_year; i < size(); ++i, ++y) {
             (*this)[i] = s;
             s += 365 + (Date::is_leap_year(y) ? 1 : 0);
         }
-    }
+	}
 };
 
 const std::array<unsigned, 12> Date::days_in_month = { {31,28,31,30,31,30,31,31,30,31,30,31} };
@@ -70,45 +70,6 @@ std::array<unsigned,3> Date::get_day_month_year(unsigned s) const{
 	if (m == 1 && flag) ret[0] += 1;
 	return ret;
 }
-
-/*
-unsigned Date::get_year(unsigned s) const
-{
-	unsigned year = Date::first_year - 1;
-	for (auto i = days_epoch.begin(); i != days_epoch.end(); ++i) {
-		if (*i > s) break;
-		else year++;
-	}
-	return year;
-}
-
-unsigned Date::get_month(unsigned s) const
-{
-	unsigned year = Date::get_year(s);
-	unsigned days_in_year = s - days_epoch[(year - Date::first_year)];
-	unsigned month = 0;
-	for (auto i = days_ytd.begin(); i != days_ytd.end(); ++i) {
-		if (is_leap_year(year) && month > 1) {
-			if (*i + 1 > days_in_year) break;
-			else month++;
-		}
-		else {
-			if (*i > days_in_year) break;
-			else month++;
-		}
-	}
-	return month;
-}
-
-unsigned Date::get_day(unsigned s) const
-{
-	unsigned year = Date::get_year(s);
-	unsigned month = Date::get_month(s);
-	unsigned days_in_year = s - days_epoch[(year - Date::first_year)];
-	unsigned days = 1 + days_in_year - ((is_leap_year(year) && month > 2) ? days_ytd[month - 1] + 1 : days_ytd[month - 1]);
-	return days;
-}
-*/
 
 //  The function calculates the distance between two Dates. d1 > d2 is allowed, which returns the negative of d2-d1.
 long operator-(const Date& d1, const Date& d2)

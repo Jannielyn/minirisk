@@ -1,2 +1,14 @@
-﻿  PricerPayment.cpp
+﻿  CurveDiscount.cpp
+  CurveFXForward.cpp
+  CurveFXSpot.cpp
+  DemoRisk.cpp
+  Market.cpp
+  PortfolioUtils.cpp
+  PricerFXForward.cpp
+  PricerPayment.cpp
+  TradeFXForward.cpp
+  TradeGuids.cpp
+  TradePayment.cpp
+  Generating Code...
+C:\Users\kirit\Desktop\MFE\Sem 1\FE5226\minirisk\src\CurveDiscount.cpp(19,1): warning C4018:  '>': signed/unsigned mismatch
   minirisk.vcxproj -> C:\Users\kirit\Desktop\MFE\Sem 1\FE5226\minirisk\vs\x64\Debug\minirisk.exe

@@ -4,6 +4,7 @@
 
 namespace minirisk {
 
+// Pricer class for final ccy conversion
 struct Pricer : IPricer
 {
 protected:

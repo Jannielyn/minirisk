@@ -19,7 +19,7 @@ FixingDataServer::FixingDataServer(const string& filename)
 			unsigned d = std::atoi(ds.substr(6, 2).c_str());
 			auto ins = m_data.emplace(std::make_pair(name, Date(y, m, d)), value);
 			MYASSERT(ins.second, "Duplicated fixing: " << name);
-		}
+		} // check and decode yyyymmdd
     } while (is);
 }
 

@@ -13,6 +13,7 @@ struct CurveFXSpot : ICurveFXSpot
 
     virtual Date today() const { return m_today; }
 
+	//return fx spot price
 	double spot() const;
 
 private:

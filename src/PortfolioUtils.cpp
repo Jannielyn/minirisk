@@ -50,6 +50,7 @@ portfolio_total_t portfolio_total(const portfolio_values_t& values)
 	return total;
 }
 
+// PV01Bucketed that computes risk with respect to individual yield curves (the yield curve for each tenor Ti change, with all the rest remaining constant).
 std::vector<std::pair<string, portfolio_values_t>> compute_pv01_bucketed(const std::vector<ppricer_t>& pricers, const Market& mkt, const FixingDataServer& fds)
 {
     std::vector<std::pair<string, portfolio_values_t>> pv01;  // PV01 per trade
@@ -102,7 +103,7 @@ std::vector<std::pair<string, portfolio_values_t>> compute_pv01_bucketed(const s
     return pv01;
 }
 
-
+//PV01Parallel that computes risk with respect to parallel shift of the yield curve (all risk factor move simultaneously)
 std::vector<std::pair<string, portfolio_values_t>> compute_pv01_parallel(const std::vector<ppricer_t>& pricers, const Market& mkt, const FixingDataServer& fds)
 {
 	std::vector<std::pair<string, portfolio_values_t>> pv01;  // PV01 per trade
@@ -165,6 +166,7 @@ std::vector<std::pair<string, portfolio_values_t>> compute_pv01_parallel(const s
 	return pv01;
 }
 
+// fx spot greek function created as per section 5.10
 std::vector<std::pair<string, portfolio_values_t>> compute_fx_delta(const std::vector<ppricer_t>& pricers, const Market& mkt, const FixingDataServer& fds)
 {
 	std::vector<std::pair<string, portfolio_values_t>> pv01;  // PV01 per trade

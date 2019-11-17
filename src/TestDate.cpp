@@ -4,6 +4,7 @@
 #include "Date.h"
 using namespace minirisk;
 
+// write an isValidDate function for test1 to use
 bool isValidDate(unsigned y, unsigned m, unsigned d)
 {
 	if (y > Date::last_year || y < Date::first_year) return false;
@@ -24,6 +25,7 @@ bool isValidDate(unsigned y, unsigned m, unsigned d)
 	return true;
 }
 
+// Construction of an invalid date should generate an error, varified with 1000 intentionally generated invalid date
 void test1()
 {
 	int counter = 0;
@@ -66,6 +68,7 @@ void test1()
 	std::cout << "Test1 completed " << ((failures == 0) ? "successfully" : "unsuccessfully") << " with " << failures << " exceptions found!" << std::endl;
 }
 
+// Verify that converting a date in calendar format (day, month, year) to serial format and then converting back to calendar format yields the original date. Loop over the entire range (1-Jan-1900, 31-Dec-2199).
 
 void test2()
 {	
@@ -90,7 +93,7 @@ void test2()
 	std::cout << "Test2 completed " << ((failures == 0) ? "successfully" : "unsuccessfully") << " with " << failures << " exceptions found!" << std::endl;
 }
 
-
+// Verify that the serial number generated for 2 contiguous dates are contiguous. For instance 31-Jan-2012 and 1-Feb-2012 are contiguous dates, hence the serial numbers they generate should only differ by 1. Loop over the entire range (1-Jan-1900, 31-Dec-2199).
 void test3()
 {
 	int failures = 0;

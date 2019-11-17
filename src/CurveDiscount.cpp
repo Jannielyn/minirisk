@@ -13,6 +13,8 @@ CurveDiscount::CurveDiscount(Market *mkt, const Date& today, const string& curve
 {
 }
 
+// function df compute the discount factor as per section 5.4 requirement.
+// return error when date input is beyond the last tenor or before the anchor date
 double  CurveDiscount::df(const Date& t) const
 {
     MYASSERT((!(t < m_today)), "Curve " << m_name << ", DF not available before anchor date " << m_today << ", requested "<< t);

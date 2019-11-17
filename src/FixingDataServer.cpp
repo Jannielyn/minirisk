@@ -23,6 +23,7 @@ FixingDataServer::FixingDataServer(const string& filename)
     } while (is);
 }
 
+// method to return the fixing if available, otherwise trigger an error
 double FixingDataServer::get(const string& name, const Date& t) const
 {
     auto iter = m_data.find(std::make_pair(name,t));
@@ -30,6 +31,7 @@ double FixingDataServer::get(const string& name, const Date& t) const
     return iter->second;
 }
 
+// method to return the fixing if available, NaN otherwise, and set the flag if found
 std::pair<double, bool> FixingDataServer::lookup(const string& name, const Date& t) const
 {
     auto iter = m_data.find(std::make_pair(name, t));

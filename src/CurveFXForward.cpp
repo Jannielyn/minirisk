@@ -13,6 +13,7 @@ CurveFXForward::CurveFXForward(Market *mkt, const Date& today, const string& cur
 {
 }
 
+// method to compute the forward price observed at time T0 of ccy1 expressed in ccy2 for delivery at time T
 double CurveFXForward::fwd(const Date& t) const
 {
 	double s = m_fx_curve->spot();

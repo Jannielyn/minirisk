@@ -4,7 +4,7 @@
 
 namespace minirisk {
 
-// last 6 letter of the curve name should be in the format of "CCYUSD", i.e. "the prices of CCY in USD".
+// last 7 digit of the curve name should be in the format of "CCY.USD", i.e. "the prices of CCY in USD".
 CurveFXSpot::CurveFXSpot(Market *mkt, const Date& today, const string& curve_name)
     : m_today(today)
     , m_name(curve_name)
